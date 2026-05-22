@@ -1,0 +1,22 @@
+{
+  "name": "chess0.0",
+  "version": "1.0.0",
+  "description": "A real-time, browser-based multiplayer chess game built with Node.js, Express, Socket.io, Chess.js and Chessboard.js. Two players can join as White and Black players in order to play against each other.",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beltag-Paula/Chess-0.0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Beltag-Paula/Chess-0.0/issues"
+  },
+  "homepage": "https://github.com/Beltag-Paula/Chess-0.0#readme"
+}
