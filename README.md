@@ -37,6 +37,7 @@ A real-time, browser-based multiplayer chess game built with Node.js, Express, S
 ### 📝 Screenshot
 ![Gameplay Screenshot](public/imgPieces/gamePlay.jpg)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EfV3KD0RC1Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ---
 
 ### 🔗 Useful Links
