@@ -1,40 +1,23 @@
 doctype html
 html(lang="en")
-
     head
         meta(charset="UTF-8")
-
-        meta(
-            name="viewport",
-            content="width=device-width, initial-scale=1.0"
-        )
-
-        link(
-            rel="stylesheet",
-            href="/public/styles.css"
-        )
-
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/public/styles.css")
         title Chess Arena
-
     body
+        //- Top Right Toggle Button
+        button#theme-toggle Change Theme
 
         h1 Choose Game Mode
-
         h2 Vs Stockfish
-
-        a(href="/gameBot/white")
-            | Play as White
-
-        a(href="/gameBot/black")
-            | Play as Black
-
+        a(href="/gameBot/white") Play as White
+        a(href="/gameBot/black") Play as Black
         br
         br
-
         h2 Vs Human
+        a(href="/gamePlayer/white") Play as White
+        a(href="/gamePlayer/black") Play as Black
 
-        a(href="/gamePlayer/white")
-            | Play as White
-
-        a(href="/gamePlayer/black")
-            | Play as Black
+        //- Theme Switching script injection
+        include buttonThemeChange.pug

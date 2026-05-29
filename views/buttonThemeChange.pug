@@ -1,0 +1,64 @@
+script.
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('theme-toggle');
+
+        if (!toggleBtn) return;
+
+        const themes = [
+            'yellow',
+            'mariner',
+            'jester',
+            'lava',
+            'kanto',
+            'starwars',
+            'assassin',
+            'nfs',
+            'ben10',
+            'cyberpunk',
+            'amethyst',
+            'desert',
+            'matrix',
+            'vaporwave',
+            'mint',
+            'autumn',
+            'space96',
+            'toxic',
+            'sakura',
+            'crimson',
+            'steampunk',
+            'atlantis',
+            'gameboy'
+        ];
+
+        let currentTheme =
+            localStorage.getItem('pixel-chess-theme') || 'yellow';
+
+        if (currentTheme !== 'yellow') {
+            document.documentElement.setAttribute(
+                'data-theme',
+                currentTheme
+            );
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % themes.length;
+            const nextTheme = themes[nextIndex];
+
+            document.documentElement.removeAttribute('data-theme');
+
+            if (nextTheme !== 'yellow') {
+                document.documentElement.setAttribute(
+                    'data-theme',
+                    nextTheme
+                );
+            }
+
+            localStorage.setItem(
+                'pixel-chess-theme',
+                nextTheme
+            );
+
+            currentTheme = nextTheme;
+        });
+    });

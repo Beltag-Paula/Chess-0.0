@@ -1,41 +1,23 @@
 doctype html
 html
-
     head
-
         meta(charset="UTF-8")
-
         title Chess Arena
-
-        link(
-            rel="stylesheet"
-            href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
-        )
-
-        link(
-            rel="stylesheet",
-            href="/public/styles.css"
-        )
-
+        link(rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css")
+        link(rel="stylesheet", href="/public/styles.css")
     body
+        button#theme-toggle Change Theme
 
         h1 Chess vs Stockfish
-
         #board(style="width: 500px")
 
         script(src="https://code.jquery.com/jquery-3.6.0.min.js")
-
-        script(
-            src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
-        )
-
-        script(
-            src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"
-        )
-
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js")
+        script(src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js")
         script(src="/socket.io/socket.io.js")
-
         script.
             window.playerColor = "!{color}"
-
         script(src="/public/clientBot.js")
+
+        //- Shared script injection
+        include buttonThemeChange.pug
