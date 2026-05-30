@@ -34,11 +34,12 @@ A real-time, browser-based multiplayer chess game built with Node.js, Express, S
 ```
 ---
 
-### 📝 Screenshot
+### 📝 Screenshot of development
 ![Gameplay Screenshot](public/imgPieces/gamePlay.jpg)
 
+[![Video Title](https://img.youtube.com/vi/EfV3KD0RC1Y/0.jpg)](https://www.youtube.com/watch?v=EfV3KD0RC1Y) 
 
-[![Video Title](https://img.youtube.com/vi/EfV3KD0RC1Y/0.jpg)](https://www.youtube.com/watch?v=EfV3KD0RC1Y)   
+[![Updated](https://img.youtube.com/vi/AmU0f8L3Cic/0.jpg)](https://www.youtube.com/watch?v=AmU0f8L3Cic)
 ---
 
 ### 🔗 Useful Links
