@@ -4,20 +4,26 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="/public/styles.css")
-        title Chess Arena
+        title Chess Arena - Menu
     body
-        //- Top Right Toggle Button
-        button#theme-toggle Change Theme
+        div.menu-layout
+            header.menu-header
+                h1 Chess Arena
+                button#theme-toggle.btn.btn-small Change Theme
 
-        h1 Choose Game Mode
-        h2 Vs Stockfish
-        a(href="/gameBot/white") Play as White
-        a(href="/gameBot/black") Play as Black
-        br
-        br
-        h2 Vs Human
-        a(href="/gamePlayer/white") Play as White
-        a(href="/gamePlayer/black") Play as Black
+            main.menu-grid
+                section.menu-card
+                    h2 Vs Stockfish
+                    p Challenge the engine locally. Adjust strength seamlessly mid-game.
+                    div.menu-actions
+                        a(href="/gameBot/white").btn Play White
+                        a(href="/gameBot/black").btn.btn-dark Play Black
 
-        //- Theme Switching script injection
+                section.menu-card
+                    h2 Vs Human
+                    p Jump into a lobby arena to test your skills against players online.
+                    div.menu-actions
+                        a(href="/gamePlayer/white").btn Play White
+                        a(href="/gamePlayer/black").btn.btn-dark Play Black
+
         include buttonThemeChange.pug

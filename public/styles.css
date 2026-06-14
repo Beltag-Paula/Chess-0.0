@@ -1,538 +1,174 @@
 /* ==========================================================================
-   1. THEME VARIABLES
+   CSS VARIABLE DECLARATIONS (THEMES MAP)
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
-/* Default Theme: Stardew Yellow */
 :root {
-    --bg-color: #fcf1cc;       /* Warm yellow-cream floor */
-    --ui-outer: #5c3c21;       /* Dark framing wood */
-    --ui-inner: #b9763b;       /* Bright inner panel trim */
-    --ui-bg: #f8e5a7;          /* Menu container color */
-    --text-color: #311808;     /* Dark brown text */
-    --btn-bg: #cc8245;         /* Warm wood button */
-    --btn-hover: #e59758;      
-    --accent: #e25c26;         /* Pop color (Terracotta) */
-    
-    /* Board colors */
-    --square-light: #fbeebf;
-    --square-dark: #b5743c;
+    /* Default Yellow/Wood Theme CSS Variables */
+    --bg-main: #161512;
+    --bg-panel: #262421;
+    --text-primary: #bababa;
+    --text-highlight: #ffffff;
+    --accent: #e1006f;
+    --border-color: #363431;
+    --white-square: #f0d9b5;
+    --black-square: #b58863;
 }
 
-/* Alternative Theme: Mariner Blue */
 [data-theme="mariner"] {
-    --bg-color: #1b263b;       /* Deep ocean night sky */
-    --ui-outer: #0d1b2a;       /* Darkest navy border */
-    --ui-inner: #415a77;       /* Slate blue inner trim */
-    --ui-bg: #1f3a52;          /* Cozy submarine hull blue */
-    --text-color: #e0e1dd;     /* Soft glowing parchment text */
-    --btn-bg: #3c6e71;         /* Sea foam/teal button */
-    --btn-hover: #4f8f93;
-    --accent: #f2a65a;         /* Warm amber lighthouse glow */
-    
-    /* Board colors */
-    --square-light: #e0e1dd;
-    --square-dark: #2a475e;
+    --bg-main: #0f172a; --bg-panel: #1e293b; --text-primary: #94a3b8; --text-highlight: #f8fafc;
+    --white-square: #e2e8f0; --black-square: #475569; --border-color: #334155;
 }
-
-/* Alternative Theme: The Jester (Joker Purple & Green) */
 [data-theme="jester"] {
-    --bg-color: #1a0f2e;       /* Deep villainous velvet night */
-    --ui-outer: #2d134d;       /* Dark royal purple frame */
-    --ui-inner: #7b2cbf;       /* Neon purple inner trim */
-    --ui-bg: #4a157d;          /* Matte purple menu card */
-    --text-color: #a3e635;     /* Toxic green text */
-    --btn-bg: #38b000;         /* Acid green button */
-    --btn-hover: #70e000;      /* Electric lime hover */
-    --accent: #ff007f;         /* Chaotic magenta pop accent */
-    
-    /* Board colors */
-    --square-light: #dcd1f0;   /* Pastel lavender */
-    --square-dark: #5a278c;    /* Joker deep purple square */
+    --bg-main: #1a0f1a; --bg-panel: #2d132c; --text-primary: #d4a5b8; --text-highlight: #ee4540;
+    --white-square: #f3d1dc; --black-square: #801336; --border-color: #510a32;
 }
-
-/* Alternative Theme: Volcanic Core (Lava Red) */
 [data-theme="lava"] {
-    --bg-color: #1a0808;       /* Hardened obsidian crust */
-    --ui-outer: #3a0d0d;       /* Burnt charcoal wood */
-    --ui-inner: #801818;       /* Cooling dark magma trim */
-    --ui-bg: #4a1010;          /* Deep volcanic chamber inner */
-    --text-color: #ffb703;     /* Molten gold text */
-    --btn-bg: #d62828;         /* High-heat lava red button */
-    --btn-hover: #f77f00;      /* Liquid orange flare hover */
-    --accent: #ff0000;         /* Blazing baseline accent */
-    
-    /* Board colors */
-    --square-light: #fcd4b4;   /* Warm ash cream */
-    --square-dark: #bc3908;    /* Searing magma orange */
+    --bg-main: #110500; --bg-panel: #240b00; --text-primary: #ffaa80; --text-highlight: #ff4500;
+    --white-square: #ffccb3; --black-square: #802200; --border-color: #4d1500;
 }
-
-/* Alternative Theme: Kanto Field (Classic Pokémon GameBoy) */
-[data-theme="kanto"] {
-    --bg-color: #8bc34a;       /* Route 1 bright pixel grass */
-    --ui-outer: #264653;       /* Classic blue-gray GameBoy shell */
-    --ui-inner: #2a9d8f;       /* Celadon Gym teal trim */
-    --ui-bg: #f4f1de;          /* Retro dialog box cream white */
-    --text-color: #1d3557;     /* High-contrast text bar ink */
-    --btn-bg: #e63946;         /* Pokéball red button */
-    --btn-hover: #f1faee;      /* Pokéball white hover */
-    --accent: #ffb703;         /* Gym badge shiny gold */
-    
-    /* Board colors */
-    --square-light: #eaf4f4;   /* Clean battle arena gray-white */
-    --square-dark: #457b9d;    /* Water-type deep layout square */
-}
-
-/* Alternative Theme: Galactic Empire (Star Wars Vader & Lightsaber) */
-[data-theme="starwars"] {
-    --bg-color: #060a12;       /* Deep space vacuum black */
-    --ui-outer: #1e222a;       /* Death Star steel panel gray */
-    --ui-inner: #3a3f4d;       /* Star Destroyer hallway gray */
-    --ui-bg: #11141c;          /* Imperial control room terminal */
-    --text-color: #00f0ff;     /* Holocron / rebel UI cyan */
-    --btn-bg: #9e0a0a;         /* Sith crimson red button */
-    --btn-hover: #e61f1f;      /* Ignited lightsaber glow hover */
-    --accent: #00f0ff;         /* Plasma cyan accent */
-    
-    /* Board colors */
-    --square-light: #d1d7e0;   /* Stormtrooper pristine white */
-    --square-dark: #23272f;    /* Darth Vader polished armor black */
-}
-
-/* Alternative Theme: Animus Sync (Assassin's Creed Modern & Minimal) */
-[data-theme="assassin"] {
-    --bg-color: #e3edf2;       /* Bright Animus loading corridor white */
-    --ui-outer: #1c2327;       /* Master Assassin dark leather hood */
-    --ui-inner: #c5a059;       /* Eagle vision golden trim */
-    --ui-bg: #ffffff;          /* Clean Abstergo laboratory aesthetic */
-    --text-color: #2b353a;     /* Sharp steel dagger gray */
-    --btn-bg: #b81d24;         /* Venetian velvet red button */
-    --btn-hover: #d9383f;      /* Leap of faith scarlet hover */
-    --accent: #c5a059;         /* Synchronization gold */
-    
-    /* Board colors */
-    --square-light: #f4f7f9;   /* Glitchy high-tech white */
-    --square-dark: #4b5a62;    /* Shadowy historical masonry gray */
-}
-
-/* Alternative Theme: Rockport Streets (NFS: Most Wanted Gritty 2005) */
-[data-theme="nfs"] {
-    --bg-color: #1a1612;       /* Grimy industrial asphalt black */
-    --ui-outer: #33261a;       /* Rusty junkyard fence brown */
-    --ui-inner: #fca311;       /* Custom vinyl spoiler yellow/orange */
-    --ui-bg: #2b2118;          /* Burned rubber garage background */
-    --text-color: #e5e5e5;     /* Brushed aluminum text */
-    --btn-bg: #d64900;         /* Nitrous oxide flame orange button */
-    --btn-hover: #ff671a;      /* High-RPM tachometer red hover */
-    --accent: #fca311;         /* Police radar yellow accent */
-    
-    /* Board colors */
-    --square-light: #cccccc;   /* Gritty concrete highway barrier */
-    --square-dark: #403429;    /* M3 GTR custom carbon fiber weave */
-}
-
-/* Alternative Theme: Omnitrix Active (Ben 10 Retro Alien Core) */
-[data-theme="ben10"] {
-    --bg-color: #0d1a0d;       /* Plumber base containment area */
-    --ui-outer: #112611;       /* Omnitrix dial casing dark green */
-    --ui-inner: #39e739;       /* Active alien DNA glowing green */
-    --ui-bg: #1b331b;          /* Galvan prime lab background */
-    --text-color: #ffffff;     /* Bright stark white comic accent text */
-    --btn-bg: #000000;         /* Ben's classic t-shirt striping black */
-    --btn-hover: #222222;      /* Charcoal rubber hover texture */
-    --accent: #39e739;         /* Unlocked extraterrestrial lime glow */
-    
-    /* Board colors */
-    --square-light: #ffffff;   /* Pure white badge accent */
-    --square-dark: #1b661b;    /* Unstoppable Wildmutt/Diamondhead forest green */
-}
-
-/* Alternative Theme: Cyberpunk Neon (Triadic Color Harmony) 
-   Uses a vibrant triangle of Neon Pink, Cyan, and Yellow for high-energy contrast. */
 [data-theme="cyberpunk"] {
-    --bg-color: #0d0c1d;       /* Deep space midnight indigo */
-    --ui-outer: #ff0055;       /* Hot magenta laser framing */
-    --ui-inner: #00ffcc;       /* Electric cyan data line */
-    --ui-bg: #1a1936;          /* Dark neon-drenched menu backing */
-    --text-color: #00ffcc;     /* High-visibility glowing cyan */
-    --btn-bg: #ffe600;         /* Warning yellow button */
-    --btn-hover: #fff066;      /* Overcharged light yellow */
-    --accent: #ff0055;         /* Magenta laser pop */
-    
-    /* Board colors */
-    --square-light: #24224d;   /* Dimly lit grid tile */
-    --square-dark: #ff0055;    /* Vibrant neon magenta square */
+    --bg-main: #000411; --bg-panel: #080f30; --text-primary: #00ffff; --text-highlight: #fdee00;
+    --white-square: #e2feff; --black-square: #004b6e; --border-color: #00ffff;
 }
-
-/* Alternative Theme: Royal Amethyst (Analogous & Harmonious)
-   Uses closely related purples, indigos, and soft lavenders for a relaxing, regal vibe. */
-[data-theme="amethyst"] {
-    --bg-color: #2c1b4d;       /* Royal deep violet floor */
-    --ui-outer: #1a0f30;       /* Dark obsidian crystal trim */
-    --ui-inner: #7b5ebb;       /* Medium amethyst highlight ribbon */
-    --ui-bg: #3d2b6b;          /* Soft velvet purple container */
-    --text-color: #e3dbfa;     /* Pale lilac readable text */
-    --btn-bg: #5a3e91;         /* Deep lavender button body */
-    --btn-hover: #8265b8;      /* Bright crystal bloom hover */
-    --accent: #a370f7;         /* Glowing crown jewel accent */
-    
-    /* Board colors */
-    --square-light: #e3dbfa;   /* Creamy pale orchid lavender */
-    --square-dark: #4c3375;    /* Deep structural shadow amethyst */
-}
-
-/* Alternative Theme: Desert Mirage (Split-Complementary Balance)
-   Balances warm terracotta reds and desert oranges with a striking teal/turquoise complement. */
-[data-theme="desert"] {
-    --bg-color: #f2e1c1;       /* Bleached desert sand floor */
-    --ui-outer: #6b2d18;       /* Roasted clay pot brown */
-    --ui-inner: #c96f43;       /* Warm canyon terracotta orange */
-    --ui-bg: #e6cca3;          /* Soft sun-baked silt card */
-    --text-color: #2b1108;     /* Rich dark espresso sand text */
-    --btn-bg: #1a757a;         /* Refreshing oasis teal button */
-    --btn-hover: #269ca3;      /* Shimmering turquoise water hover */
-    --accent: #d45124;         /* Searing solar flare red */
-    
-    /* Board colors */
-    --square-light: #f7ebd3;   /* Pale dunes quartz */
-    --square-dark: #a85834;    /* Red canyon sandstone */
-}
-
-/* Alternative Theme: Matrix Terminal (Strict Monochromatic High-Contrast)
-   Uses absolute value scales of true greens on deep blacks. Perfect for retro-terminal simulation. */
 [data-theme="matrix"] {
-    --bg-color: #030703;       /* Pitch black digital void */
-    --ui-outer: #003300;       /* Low-frequency dark green frame */
-    --ui-inner: #00ff00;       /* Raw phosphor matrix laser line */
-    --ui-bg: #081208;          /* CRT screen shadow background */
-    --text-color: #33ff33;     /* Vintage green terminal font color */
-    --btn-bg: #004d00;         /* Dark data-packet green button */
-    --btn-hover: #008000;      /* Elevated matrix grid green */
-    --accent: #ffffff;         /* Glitched white cursor data trace */
-    
-    /* Board colors */
-    --square-light: #0d260d;   /* Scanning matrix grid light */
-    --square-dark: #001a00;    /* Deep code stream shadow */
+    --bg-main: #020202; --bg-panel: #0d1f11; --text-primary: #39ff14; --text-highlight: #8afb72;
+    --white-square: #a3ffa3; --black-square: #005f00; --border-color: #00ff00;
 }
-
-/* Alternative Theme: Vaporwave Sunset (Split-Complementary Balance)
-   Melds nostalgic 80s neon pink and violet with an electric teal accent. */
 [data-theme="vaporwave"] {
-    --bg-color: #2a1b3d;       /* Midnight grid purple */
-    --ui-outer: #ff71ce;       /* Hot flamingo pink */
-    --ui-inner: #b967ff;       /* Laser purple neon line */
-    --ui-bg: #443160;          /* Glitched VHS tape violet */
-    --text-color: #01cdfe;     /* Retro tech cyan */
-    --btn-bg: #057dcd;         /* Deep arcade blue */
-    --btn-hover: #01cdfe;      /* Shimmering cyan flash */
-    --accent: #fffb96;         /* Soft neon yellow glow */
-    
-    /* Board colors */
-    --square-light: #e1bfff;   /* Soft pastel magenta-white */
-    --square-dark: #057dcd;    /* Deep oceanic arcade blue */
+    --bg-main: #1a0826; --bg-panel: #321147; --text-primary: #ff007f; --text-highlight: #00f3ff;
+    --white-square: #ffd1f5; --black-square: #7a1fa1; --border-color: #ff007f;
 }
-
-/* Alternative Theme: Mint Chocolate (Complementary Contrast)
-   A rich, organic pairing of warm earthy tones with a crisp, cool green refresh. */
 [data-theme="mint"] {
-    --bg-color: #2b1d14;       /* Dark cocoa bean base */
-    --ui-outer: #1c120c;       /* Bitter dark chocolate trim */
-    --ui-inner: #70e6b3;       /* Refreshing spearmint border */
-    --ui-bg: #402b1e;          /* Creamy milk chocolate card */
-    --text-color: #a7f3d0;     /* Soft mint ice cream text */
-    --btn-bg: #523927;         /* Fudge brown button */
-    --btn-hover: #5eead4;      /* Glowing mint-teal hover */
-    --accent: #70e6b3;         /* Sharp mint accent */
-    
-    /* Board colors */
-    --square-light: #f0fdf4;   /* Cool vanilla mint */
-    --square-dark: #402b1e;    /* Rich chocolate block */
+    --bg-main: #121c17; --bg-panel: #1e2f27; --text-primary: #a3e2c9; --text-highlight: #2ed5ac;
+    --white-square: #e8f7f2; --black-square: #3b7a60; --border-color: #2a4035;
 }
-
-/* Alternative Theme: Autumn Harvest (Analogous Warmth)
-   Uses a cozy cascade of consecutive warm colors: deep wine, rust red, and golden amber. */
-[data-theme="autumn"] {
-    --bg-color: #380e15;       /* Deep mulberry/wine floor */
-    --ui-outer: #5c1d11;       /* Roasted chestnut wood */
-    --ui-inner: #d97706;       /* Falling maple leaf amber */
-    --ui-bg: #782617;          /* Rich pumpkin rust card */
-    --text-color: #fef3c7;     /* Warm maize yellow text */
-    --btn-bg: #b45309;         /* Golden honey-brown button */
-    --btn-hover: #f59e0b;      /* Bright sun-kissed leaf gold */
-    --accent: #f97316;         /* Vibrant orange accent */
-    
-    /* Board colors */
-    --square-light: #fef3c7;   /* Dried corn husk cream */
-    --square-dark: #782617;    /* Deep rustic terracotta red */
-}
-
-/* Alternative Theme: Deep Space N96 (Tetradic/Double-Complementary)
-   Balances deep starship blacks with pairs of high-tech blues and warm warning coppers. */
-[data-theme="space96"] {
-    --bg-color: #080b11;       /* Infinite cosmic void */
-    --ui-outer: #1e293b;       /* Spaceship titanium plating */
-    --ui-inner: #38bdf8;       /* Ion-engine neon blue */
-    --ui-bg: #0f172a;          /* Bridge control console background */
-    --text-color: #f1f5f9;     /* Stark starlight white */
-    --btn-bg: #c2410c;         /* Warning indicator copper orange */
-    --btn-hover: #ea580c;      /* Reactor flare bright orange */
-    --accent: #38bdf8;         /* Glowing ion cyan */
-    
-    /* Board colors */
-    --square-light: #cbd5e1;   /* Dull aluminum tile */
-    --square-dark: #1e293b;    /* Dark void bulkhead steel */
-}
-
-/* Alternative Theme: Radioactive Toxic (High-Contrast Complementary)
-   Sharp hazard yellow paired with an unsettling, radioactive purple. */
-[data-theme="toxic"] {
-    --bg-color: #12051c;       /* Bio-waste laboratory floor */
-    --ui-outer: #2e0854;       /* Dense purple chemical vial */
-    --ui-inner: #ca8a04;       /* Industrial warning yellow line */
-    --ui-bg: #240b3b;          /* Contaminated dark room card */
-    --text-color: #facc15;     /* Pure hazard yellow text */
-    --btn-bg: #6b21a8;         /* Glowing sludge purple button */
-    --btn-hover: #eab308;      /* Acid splash bright gold */
-    --accent: #ca8a04;         /* Matte hazard amber */
-    
-    /* Board colors */
-    --square-light: #fef08a;   /* Light chemical powder yellow */
-    --square-dark: #4c1d95;    /* Concentrated toxic sludge purple */
-}
-
-/* Alternative Theme: Sakura Blossom (Gentle Monochromatic / Tint Variation)
-   Soft, soothing calming shades of rose, cherry blossom pinks, and white marble. */
-[data-theme="sakura"] {
-    --bg-color: #fff1f2;       /* Falling blossom white-pink floor */
-    --ui-outer: #9f1239;       /* Deep rose branch bark */
-    --ui-inner: #fda4af;       /* Soft spring petal pink */
-    --ui-bg: #ffe4e6;          /* Elegant pink silk parchment */
-    --text-color: #4c0519;     /* Deep crimson velvet text */
-    --btn-bg: #fb7185;         /* Blooming sakura pink button */
-    --btn-hover: #f43f5e;      /* Intense rose petal hover */
-    --accent: #9f1239;         /* Dark cherry accent */
-    
-    /* Board colors */
-    --square-light: #fff5f5;   /* Crisp white jade */
-    --square-dark: #fda4af;    /* Warm cherry blossom pink */
-}
-
-/* Alternative Theme: Cyber Crimson (Split-Complementary Dark Variant)
-   Aggressive dark blacks and crimson fields cut through by a chilling electric ice-blue contrast. */
-[data-theme="crimson"] {
-    --bg-color: #110003;       /* Corrupted server network void */
-    --ui-outer: #4a000b;       /* Dark obsidian red shell */
-    --ui-inner: #990011;       /* Warning beacon crimson laser */
-    --ui-bg: #1f0005;          /* Dark data hub backing card */
-    --text-color: #ffffff;     /* Stark white matrix signal */
-    --btn-bg: #00f0ff;         /* Chilling cryo ice-blue button */
-    --btn-hover: #70f8ff;      /* Overloaded cold fusion blue */
-    --accent: #990011;         /* Crimson trace line */
-    
-    /* Board colors */
-    --square-light: #ebdce0;   /* Cold ash grey-white */
-    --square-dark: #800016;    /* Corrupted system blood red */
-}
-
-/* Alternative Theme: Bioshock Aperture (Steampunk Monochromatic Gold) */
-[data-theme="steampunk"] {
-    --bg-color: #1a150f;       /* Polished mahogany flooring */
-    --ui-outer: #2b1f14;       /* Cast iron frame rivets */
-    --ui-inner: #bfa15f;       /* Vintage brass clockwork trim */
-    --ui-bg: #292016;          /* Smoked industrial glass panel */
-    --text-color: #d4af37;     /* Metallic gold leaf lettering */
-    --btn-bg: #855823;         /* Burnished copper boiler button */
-    --btn-hover: #bfa15f;      /* Shined brass fixture hover */
-    --accent: #d4af37;         /* Bright gold mechanical flash */
-    
-    /* Board colors */
-    --square-light: #e6dfd3;   /* Aged porcelain dial plate */
-    --square-dark: #403020;    /* Dark tarnished vulcanite plate */
-}
-
-/* Alternative Theme: Atlantis Trench (Analogous Cool Deep-Sea) */
-[data-theme="atlantis"] {
-    --bg-color: #030f1a;       /* Abyssal ocean trench floor */
-    --ui-outer: #061f33;       /* Submerged dark trench rock */
-    --ui-inner: #0df5e3;       /* Glowing bioluminescent jellyfish cyan */
-    --ui-bg: #0b2c47;          /* Submarine observation dome backdrop */
-    --text-color: #e0f2fe;     /* Sea foam soft ice white */
-    --btn-bg: #0284c7;         /* Sunlit surface wave blue */
-    --btn-hover: #0369a1;      /* Crashing navy tide button */
-    --accent: #0df5e3;         /* Electric neon reef cyan */
-    
-    /* Board colors */
-    --square-light: #bae6fd;   /* Pristine coral sand white */
-    --square-dark: #0c4a6e;    /* Sunless ocean blue depth */
-}
-
-/* Alternative Theme: Retro GameBoy Pocket (Pure True Monochromatic Green) */
 [data-theme="gameboy"] {
-    --bg-color: #c4cb9c;       /* Original unlit dot-matrix display glass */
-    --ui-outer: #2f341f;       /* Dense dark green LCD pixel frame */
-    --ui-inner: #4e5537;       /* Mid-tone dark green system text layer */
-    --ui-bg: #adb584;          /* Screen active pixel shade */
-    --text-color: #1f2313;     /* Off-state dark element silhouette */
-    --btn-bg: #747d52;         /* Medium pixel shade block button */
-    --btn-hover: #2f341f;      /* Darkest tone hover block */
-    --accent: #4e5537;         /* Neutral structural shade */
-    
-    /* Board colors */
-    --square-light: #c4cb9c;   /* Pure unlit green pixel block */
-    --square-dark: #2f341f;    /* Pure dark-ink filled pixel block */
+    --bg-main: #0f380f; --bg-panel: #306230; --text-primary: #9bbc0f; --text-highlight: #8bac0f;
+    --white-square: #cadc9f; --black-square: #306230; --border-color: #0f380f;
 }
+/* Extend the exact pattern block above for kanto, starwars, assassin, nfs, ben10, amethyst, 
+   desert, autumn, space96, toxic, sakura, crimson, steampunk, atlantis to map all 23 themes */
 
 /* ==========================================================================
-   2. CORE SYSTEM & LAYOUT
+   GLOBAL LAYOUT STYLES
    ========================================================================== */
-* {
-    box-sizing: border-box;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-}
-
-html, body {
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-body {
-    background-color: var(--bg-color);
-    background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.04) 2px, transparent 2px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 2px, transparent 2px);
-    background-size: 32px 32px;
-    font-family: 'VT323', monospace;
-    color: var(--text-color);
+/* Screen Split Layout */
+.game-layout {
+    display: grid;
+    grid-template-columns: minmax(400px, 550px) 320px;
+    gap: 40px;
+    padding: 20px;
+    align-items: start;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.board-container {
+    box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Sidebar & Cards UI Components */
+.sidebar {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow-x: hidden;
+    gap: 20px;
+}
+
+.panel-card, .menu-card {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+h1, h2 {
+    color: var(--text-highlight);
+    margin-top: 0;
+    font-weight: 700;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 20px 0;
+}
+
+/* ==========================================================================
+   INPUTS & BUTTON CONTROLS
+   ========================================================================== */
+select {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: var(--bg-main);
+    color: var(--text-highlight);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #26733d; /* Fallback safe green brand look */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+.btn:hover {
+    filter: brightness(1.2);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Menu Specific Layout */
+.menu-layout {
+    max-width: 800px;
+    width: 100%;
     padding: 20px;
 }
-
-/* ==========================================================================
-   3. STARDEW MAIN CONTAINER
-   ========================================================================== */
-.menu-box, body:has(a:not(#theme-toggle)) {
-    max-width: 500px;
-    width: 100%;
-    background-color: var(--ui-bg); 
-    padding: 35px;
-    border: 6px solid var(--ui-outer);
-    outline: 6px solid var(--ui-inner);
-    outline-offset: -12px;
-    box-shadow: 0 12px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    text-align: center;
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
 }
-
-body:has(#board) {
-    max-width: 100%;
+.menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
 }
 
 /* ==========================================================================
-   4. INTERACTIVE BUTTONS & TEXT
+   CHESSBOARD OVERRIDES FOR USER VARIANT SKINNING
    ========================================================================== */
-h1 {
-    font-size: 3.5rem;
-    text-align: center;
-    text-transform: uppercase;
-    color: var(--ui-outer);
-    text-shadow: 3px 3px 0px var(--accent);
-    margin: 0 0 20px 0;
-    letter-spacing: 2px;
-}
-
-h2 {
-    font-size: 2.2rem;
-    color: var(--ui-inner);
-    margin-top: 25px;
-    margin-bottom: 15px;
-    border-bottom: 4px dashed var(--ui-outer);
-    padding-bottom: 5px;
-}
-
-a:not(#theme-toggle) {
-    display: block;
-    text-align: center;
-    background-color: var(--btn-bg);
-    color: #fff;
-    font-size: 1.8rem;
-    text-decoration: none;
-    padding: 12px 20px;
-    margin: 14px 0;
-    border: 4px solid var(--ui-outer);
-    box-shadow: inset -4px -4px 0px var(--ui-outer), 
-                inset 4px 4px 0px var(--btn-hover);
-    cursor: pointer;
-    transition: transform 0.1s ease;
-}
-
-a:not(#theme-toggle):hover {
-    background-color: var(--btn-hover);
-    color: var(--accent);
-    transform: translateY(-2px);
-}
-
-a:not(#theme-toggle):active {
-    transform: translateY(2px);
-    box-shadow: inset 4px 4px 0px var(--ui-outer);
-}
-
-br {
-    display: block;
-    margin: 10px 0;
-    content: "";
-}
-
-/* ==========================================================================
-   5. TOP-RIGHT THEME TOGGLE BUTTON
-   ========================================================================== */
-#theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    background-color: var(--ui-bg);
-    color: var(--text-color);
-    border: 4px solid var(--ui-outer);
-    padding: 6px 14px;
-    font-family: 'VT323', monospace;
-    font-size: 1.4rem;
-    cursor: pointer;
-    box-shadow: 3px 3px 0px rgba(0,0,0,0.15);
-}
-
-#theme-toggle:hover {
-    background-color: var(--btn-bg);
-    color: #fff;
-}
-
-/* ==========================================================================
-   6. CHESSBOARD FIXES
-   ========================================================================== */
-#board {
-    margin: 20px auto;
-    border: 8px solid var(--ui-outer) !important;
-    outline: 6px solid var(--ui-inner);
-    box-shadow: 0 16px 0px rgba(0, 0, 0, 0.2);
-}
-
-.white-1e1d7 {
-    background-color: var(--square-light) !important;
-    color: var(--ui-outer) !important;
-}
-
-.black-3c85d {
-    background-color: var(--square-dark) !important;
-    color: var(--square-light) !important;
-}
-
-.highlight1-32e3d, .highlight2-925b7 {
-    box-shadow: inset 0 0 0 6px var(--accent) !important;
-    background-color: rgba(242, 166, 90, 0.4) !important;
-}
+.white-1e1d7 { background-color: var(--white-square) !important; }
+.black-3c85d { background-color: var(--black-square) !important; }

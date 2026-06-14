@@ -2,14 +2,30 @@ doctype html
 html
     head
         meta(charset="UTF-8")
-        title Chess Arena
+        title Chess Arena - vs Human
         link(rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css")
         link(rel="stylesheet", href="/public/styles.css")
     body
-        button#theme-toggle Change Theme
-
-        h1 Player vs Player
-        #board(style="width: 500px")
+        div.game-layout
+            div.board-container
+                #board(style="width: 550px")
+            
+            div.sidebar
+                div.panel-card
+                    h1 Player vs Player
+                    p Playing as: 
+                        strong(class=color) #{color.toUpperCase()}
+                    
+                    hr
+                    
+                    div.status-container
+                        p#game-status Waiting for game updates...
+                    
+                    hr
+                    
+                    div.actions
+                        button#theme-toggle.btn Change Theme
+                        a(href="/").btn.btn-outline Return Main Menu
 
         script(src="https://code.jquery.com/jquery-3.6.0.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js")
@@ -18,6 +34,4 @@ html
         script.
             window.playerColor = "!{color}"
         script(src="/public/clientPlayer.js")
-        
-        //- Shared script injection
         include buttonThemeChange.pug
