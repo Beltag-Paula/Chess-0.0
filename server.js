@@ -37,7 +37,8 @@ let players = {
 // ======================================
 
 function createEngine(elo = 1000) {
-    const engine = spawn("./engine/stockfish-bin");
+    const enginePath = path.join(__dirname, "engine", "stockfish-bin");
+    const engine = spawn(enginePath);
     engine.stdin.setEncoding("utf-8");
 
     engine.stdout.setEncoding("utf-8");
