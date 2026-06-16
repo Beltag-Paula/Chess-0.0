@@ -1,98 +1,92 @@
+document.addEventListener("DOMContentLoaded", () => {
+
 const socket = io();
 const game = new Chess();
 const playerColor = window.playerColor;
 
+let gameOver = false;
+
 socket.emit("setBotColor", playerColor);
 
-// Handle Elo Dropdown Updates
-document.addEventListener("DOMContentLoaded", () => {
-    const diffSelect = document.getElementById("difficulty-select");
-    if (diffSelect) {
-        // Broadcast the initial choice
-        socket.emit("setBotElo", parseInt(diffSelect.value));
-
-        diffSelect.addEventListener("change", (e) => {
-            const selectedElo = parseInt(e.target.value);
-            socket.emit("setBotElo", selectedElo);
-        });
-    }
-});
+// --------------------
+// BOARD SAFE INIT
+// --------------------
+const boardElement = document.getElementById("board");
+if (!boardElement) return;
 
 const board = Chessboard("board", {
     draggable: true,
     position: "start",
-    moveSpeed: "fast",       // Fast animations like Lichess
-    snapbackSpeed: 200,      // Smooth handling for illegal drop attempts
-    snapSpeed: 100,
 
     pieceTheme: function (piece) {
         const map = {
-            wP: "whitePawn.svg", wR: "whiteRook.svg", wN: "whiteKnight.svg",
-            wB: "whiteBishop.svg", wQ: "whiteQueen.svg", wK: "whiteKing.svg",
-            bP: "blackPawn.svg", bR: "blackRook.svg", bN: "blackKnight.svg",
-            bB: "blackBishop.svg", bQ: "blackQueen.svg", bK: "blackKing.svg"
+            wP: "whitePawn.svg",
+            wR: "whiteRook.svg",
+            wN: "whiteKnight.svg",
+            wB: "whiteBishop.svg",
+            wQ: "whiteQueen.svg",
+            wK: "whiteKing.svg",
+            bP: "blackPawn.svg",
+            bR: "blackRook.svg",
+            bN: "blackKnight.svg",
+            bB: "blackBishop.svg",
+            bQ: "blackQueen.svg",
+            bK: "blackKing.svg"
         };
         return `/public/imgPieces/${map[piece]}`;
     },
 
-    onDragStart: function (source, piece) {
-        if (game.game_over()) return false;
+    onDragStart: () => !gameOver,
 
-        // Freeze pieces completely if it's the Bot's turn to play
-        const turn = game.turn();
-        if ((playerColor === "white" && turn !== "w") || (playerColor === "black" && turn !== "b")) {
-            return false;
-        }
-
-        const isWhite = piece.startsWith("w");
-        const isBlack = piece.startsWith("b");
-        if (playerColor === "white" && !isWhite) return false;
-        if (playerColor === "black" && !isBlack) return false;
-
-        return true;
-    },
-
-    onDrop: function (source, target) {
-        const move = game.move({
-            from: source,
-            to: target,
-            promotion: "q"
-        });
-
+    onDrop: (source, target) => {
+        const move = game.move({ from: source, to: target, promotion: "q" });
         if (!move) return "snapback";
 
-        socket.emit("botMove", {
-            from: source,
-            to: target,
-            promotion: "q"
-        });
+        socket.emit("botMove", move);
     }
 });
 
-if (playerColor === "black") {
-    board.orientation("black");
+if (playerColor === "black") board.orientation("black");
+
+// --------------------
+// BUTTONS
+// --------------------
+const resignBtn = document.getElementById("resign-btn");
+const newGameBtn = document.getElementById("new-game-btn");
+
+if (resignBtn) {
+    resignBtn.onclick = () => socket.emit("botResign");
 }
 
+if (newGameBtn) {
+    newGameBtn.onclick = () => socket.emit("restartBotGame");
+}
+
+// --------------------
+// SOCKET EVENTS
+// --------------------
 socket.on("botBoardState", (fen) => {
     game.load(fen);
     board.position(fen);
 });
 
-async function startBlackGame() {
-    if (playerColor !== "black") return;
+socket.on("botGameOver", (data) => {
+    gameOver = true;
 
-    const diffSelect = document.getElementById("difficulty-select");
-    const currentElo = diffSelect ? parseInt(diffSelect.value) : 1400;
+    const status = document.getElementById("game-status");
+    if (status) {
+        status.textContent = `${data.winner} wins (${data.reason})`;
+    }
 
-    const response = await fetch("/bot-first-move", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ elo: currentElo })
-    });
+    if (newGameBtn) newGameBtn.disabled = false;
+});
 
-    const data = await response.json();
-    game.load(data.fen);
-    board.position(data.fen);
-}
+socket.on("botGameReset", () => {
+    gameOver = false;
+    game.reset();
+    board.position("start");
 
-startBlackGame();
+    if (newGameBtn) newGameBtn.disabled = true;
+});
+
+});

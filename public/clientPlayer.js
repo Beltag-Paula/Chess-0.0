@@ -1,27 +1,24 @@
+document.addEventListener("DOMContentLoaded", () => {
+
 const socket = io();
-
 const game = new Chess();
-
 const playerColor = window.playerColor;
 
-// ======================================
-// CHOOSE COLOR
-// ======================================
+let gameOver = false;
 
 socket.emit("chooseColor", playerColor);
 
-// ======================================
-// BOARD
-// ======================================
+// --------------------
+// BOARD (SAFE INIT)
+// --------------------
+const boardElement = document.getElementById("board");
+if (!boardElement) return;
 
 const board = Chessboard("board", {
-
     draggable: true,
-
     position: "start",
 
     pieceTheme: function (piece) {
-
         const map = {
             wP: "whitePawn.svg",
             wR: "whiteRook.svg",
@@ -29,7 +26,6 @@ const board = Chessboard("board", {
             wB: "whiteBishop.svg",
             wQ: "whiteQueen.svg",
             wK: "whiteKing.svg",
-
             bP: "blackPawn.svg",
             bR: "blackRook.svg",
             bN: "blackKnight.svg",
@@ -37,80 +33,60 @@ const board = Chessboard("board", {
             bQ: "blackQueen.svg",
             bK: "blackKing.svg"
         };
-
         return `/public/imgPieces/${map[piece]}`;
     },
 
-    onDragStart: function (source, piece) {
+    onDragStart: () => !gameOver,
 
-        const isWhite = piece.startsWith("w");
-        const isBlack = piece.startsWith("b");
+    onDrop: (source, target) => {
+        const move = game.move({ from: source, to: target, promotion: "q" });
+        if (!move) return "snapback";
 
-        if (playerColor === "white" && !isWhite) {
-            return false;
-        }
-
-        if (playerColor === "black" && !isBlack) {
-            return false;
-        }
-
-        return true;
-    },
-
-    onDrop: function (source, target) {
-
-        const move = game.move({
-            from: source,
-            to: target,
-            promotion: "q"
-        });
-
-        if (!move) {
-            return "snapback";
-        }
-
-        socket.emit("playerMove", {
-            from: source,
-            to: target,
-            promotion: "q"
-        });
+        socket.emit("playerMove", move);
     }
 });
 
-// ======================================
-// ROTATE
-// ======================================
+if (playerColor === "black") board.orientation("black");
 
-if (playerColor === "black") {
+// --------------------
+// BUTTONS (SAFE BINDING)
+// --------------------
+const resignBtn = document.getElementById("resign-btn");
+const newGameBtn = document.getElementById("new-game-btn");
 
-    board.orientation("black");
+if (resignBtn) {
+    resignBtn.onclick = () => socket.emit("playerResign");
 }
 
-// ======================================
-// RECEIVE ROLE
-// ======================================
+if (newGameBtn) {
+    newGameBtn.onclick = () => socket.emit("restartPlayerGame");
+}
 
-socket.on("playerRole", (color) => {
-
-    console.log("role:", color);
-});
-
-// ======================================
-// RECEIVE BOARD
-// ======================================
-
+// --------------------
+// SOCKET EVENTS
+// --------------------
 socket.on("playerBoardState", (fen) => {
-
     game.load(fen);
-
     board.position(fen);
 });
 
-// ======================================
-// COLOR TAKEN
-// ======================================
+socket.on("playerGameOver", (data) => {
+    gameOver = true;
 
-socket.on("colorTaken", () => {
+    const status = document.getElementById("game-status");
+    if (status) {
+        status.textContent = `${data.winner} wins (${data.reason})`;
+    }
 
-    alert("Color already taken.");
+    if (newGameBtn) newGameBtn.disabled = false;
+});
+
+socket.on("playerGameReset", () => {
+    gameOver = false;
+    game.reset();
+    board.position("start");
+
+    if (newGameBtn) newGameBtn.disabled = true;
+});
+
 });
