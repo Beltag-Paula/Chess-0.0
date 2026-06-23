@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: ghcr.io/${{ github.repository }}:latest
 
 concurrency:
-  group: docker-build-${{ github.ref }}
+  group: docker-build-${{ github.sha }}
   cancel-in-progress: true
 
 jobs:
