@@ -2,22 +2,27 @@ doctype html
 html
     head
         meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Chess Arena - vs Stockfish
         link(rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css")
         link(rel="stylesheet", href="/public/styles.css")
     body
         div.game-layout
             div.board-container
-                #board(style="width: 550px")
-            
+                #board.chessboard
+                #game-over-banner.game-over-banner
+                    div.banner-card
+                        p#banner-title.banner-title
+                        p#banner-subtitle.banner-subtitle
+
             div.sidebar
                 div.panel-card
                     h1 Vs Stockfish
-                    p Playing as: 
+                    p Playing as:
                         strong(class=color) #{color.toUpperCase()}
-                    
+
                     hr
-                    
+
                     div.control-group
                         label(for="difficulty-select") Bot Difficulty
                         select#difficulty-select
@@ -25,9 +30,14 @@ html
                             option(value="1400" selected) 1400 Elo (Intermediate)
                             option(value="2000") 2000 Elo (Advanced)
                             option(value="2500") 2500 Elo (Grandmaster)
-                    
+
                     hr
-                    
+
+                    div.status-container
+                        p#game-status Game in progress...
+
+                    hr
+
                     div.actions
                         button#resign-btn.btn Give Up
                         button#new-game-btn.btn.btn-outline(disabled) New Game

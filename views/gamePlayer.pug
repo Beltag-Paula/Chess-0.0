@@ -2,27 +2,32 @@ doctype html
 html
     head
         meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Chess Arena - vs Human
         link(rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css")
         link(rel="stylesheet", href="/public/styles.css")
     body
         div.game-layout
             div.board-container
-                #board(style="width: 550px")
-            
+                #board.chessboard
+                #game-over-banner.game-over-banner
+                    div.banner-card
+                        p#banner-title.banner-title
+                        p#banner-subtitle.banner-subtitle
+
             div.sidebar
                 div.panel-card
                     h1 Player vs Player
-                    p Playing as: 
+                    p Playing as:
                         strong(class=color) #{color.toUpperCase()}
-                    
+
                     hr
-                    
+
                     div.status-container
                         p#game-status Waiting for game updates...
-                    
+
                     hr
-                    
+
                     div.actions
                         button#resign-btn.btn Give Up
                         button#new-game-btn.btn.btn-outline(disabled) New Game

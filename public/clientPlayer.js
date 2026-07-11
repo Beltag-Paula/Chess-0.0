@@ -30,13 +30,24 @@ const board = Chessboard("board", {
             bR: "blackRook.svg",
             bN: "blackKnight.svg",
             bB: "blackBishop.svg",
-            bQ: "blackQueen.svg",
-            bK: "blackKing.svg"
+            bK: "blackKing.svg",
+            bQ: "blackQueen.svg"
         };
         return `/public/imgPieces/${map[piece]}`;
     },
 
-    onDragStart: () => !gameOver,
+    onDragStart: (source, piece) => {
+        if (gameOver) return false;
+
+        const turn = game.turn(); // 'w' or 'b'
+        const isPlayerTurn =
+            (playerColor === "white" && turn === "w") ||
+            (playerColor === "black" && turn === "b");
+        if (!isPlayerTurn) return false;
+
+        const pieceColor = piece[0] === "w" ? "white" : "black";
+        return pieceColor === playerColor;
+    },
 
     onDrop: (source, target) => {
         const move = game.move({ from: source, to: target, promotion: "q" });
@@ -46,6 +57,9 @@ const board = Chessboard("board", {
     }
 });
 
+// Keep the board sized correctly on window/orientation changes
+window.addEventListener("resize", board.resize);
+
 if (playerColor === "black") board.orientation("black");
 
 // --------------------
@@ -53,13 +67,57 @@ if (playerColor === "black") board.orientation("black");
 // --------------------
 const resignBtn = document.getElementById("resign-btn");
 const newGameBtn = document.getElementById("new-game-btn");
+const status = document.getElementById("game-status");
+const banner = document.getElementById("game-over-banner");
+const bannerTitle = document.getElementById("banner-title");
+const bannerSubtitle = document.getElementById("banner-subtitle");
 
 if (resignBtn) {
     resignBtn.onclick = () => socket.emit("playerResign");
 }
 
 if (newGameBtn) {
-    newGameBtn.onclick = () => socket.emit("restartPlayerGame");
+    newGameBtn.onclick = () => {
+        hideBanner();
+        socket.emit("restartPlayerGame");
+    };
+}
+
+// --------------------
+// GAME-OVER BANNER
+// --------------------
+const REASON_LABEL = {
+    checkmate: "Checkmate",
+    stalemate: "Draw by stalemate",
+    draw: "Draw",
+    resign: "By resignation"
+};
+
+function showBanner(winner, reason) {
+    const reasonLabel = REASON_LABEL[reason] || reason;
+    let resultClass = "result-lose";
+    let title = "You Lose";
+
+    if (winner === "draw") {
+        resultClass = "result-draw";
+        title = "Draw";
+    } else if (winner === playerColor) {
+        resultClass = "result-win";
+        title = "You Win!";
+    }
+
+    if (status) status.textContent = `${title} (${reasonLabel})`;
+
+    if (banner && bannerTitle && bannerSubtitle) {
+        bannerTitle.textContent = title;
+        bannerTitle.className = `banner-title ${resultClass}`;
+        bannerSubtitle.textContent = reasonLabel;
+        banner.classList.add("is-visible");
+    }
+}
+
+function hideBanner() {
+    if (banner) banner.classList.remove("is-visible");
 }
 
 // --------------------
@@ -72,11 +130,7 @@ socket.on("playerBoardState", (fen) => {
 
 socket.on("playerGameOver", (data) => {
     gameOver = true;
-
-    const status = document.getElementById("game-status");
-    if (status) {
-        status.textContent = `${data.winner} wins (${data.reason})`;
-    }
+    showBanner(data.winner, data.reason);
 
     if (newGameBtn) newGameBtn.disabled = false;
 });
@@ -84,9 +138,15 @@ socket.on("playerGameOver", (data) => {
 socket.on("playerGameReset", () => {
     gameOver = false;
     game.reset();
-    board.position("start");
+    board.position("start", false); // false = no animation, snaps exactly to start
+    hideBanner();
 
+    if (status) status.textContent = "Game in progress...";
     if (newGameBtn) newGameBtn.disabled = true;
+});
+
+socket.on("colorTaken", (color) => {
+    if (status) status.textContent = `${color} is already taken by another player.`;
 });
 
 });
