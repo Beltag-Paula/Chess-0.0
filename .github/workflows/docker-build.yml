@@ -54,5 +54,7 @@ jobs:
             STOCKFISH_MODE=download
 
       - name: Trigger Portainer webhook for automatic deployment
+        env:
+          PORTAINER_WEBHOOK_URL: ${{ secrets.PORTAINER_WEBHOOK_URL }}
         run: |
-          curl -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"
+          curl -X POST "${{ env.PORTAINER_WEBHOOK_URL }}"
