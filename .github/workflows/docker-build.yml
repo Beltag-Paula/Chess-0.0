@@ -52,3 +52,7 @@ jobs:
           no-cache: true
           build-args: |
             STOCKFISH_MODE=download
+
+      - name: Trigger Portainer webhook for automatic deployment
+        run: |
+          curl -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"
