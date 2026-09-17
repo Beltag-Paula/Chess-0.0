@@ -16,7 +16,7 @@ WORKDIR /tmp
 # --- Option A: Download prebuilt ---
 RUN if [ "$STOCKFISH_MODE" = "download" ]; then \
     echo "Downloading Stockfish latest release..." && \
-    curl -L https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-ubuntu-x86-64.tar -o sf.tar && \
+    curl -L https://github.com/official-stockfish/Stockfish/releases/latest/download/stockfish-linux-x86-64-universal.tar.gz -o sf.tar && \
     tar -xf sf.tar && \
     find . -type f -name "stockfish*" -executable -exec cp {} /stockfish \; ; \
     fi
