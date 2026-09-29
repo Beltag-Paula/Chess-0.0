@@ -1,0 +1,71 @@
+doctype html
+html
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Chess Arena - Game Review
+        link(rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css")
+        link(rel="stylesheet", href="/public/styles.css")
+    body
+        div.review-layout
+            //- LEFT: board, eval bar, players, navigation
+            div.review-board-col
+                div#player-top.player-tag
+                div.board-row
+                    div#eval-bar.eval-bar
+                        div#eval-fill.eval-fill
+                        span#eval-label.eval-label 0.0
+                    div.board-container
+                        #board.chessboard
+                div#player-bottom.player-tag
+                div.board-controls
+                    button#btn-first.btn.btn-outline(title="Start (Home)", aria-label="First position") ⏮
+                    button#btn-prev.btn.btn-outline(title="Previous (←)", aria-label="Previous move") ◀
+                    button#btn-next.btn.btn-outline(title="Next (→)", aria-label="Next move") ▶
+                    button#btn-last.btn.btn-outline(title="End (End)", aria-label="Last position") ⏭
+                    button#btn-key.btn(title="Jump to the next key moment", aria-label="Next key moment") ⚡
+
+            //- RIGHT: loading / error / the report
+            div.review-side
+                div#review-loading.panel-card
+                    h1 Reviewing game...
+                    p#loading-text.review-note Connecting...
+                    div.progress
+                        div#progress-bar
+
+                div#review-error.panel-card(hidden)
+                    h1 Can't show this review
+                    p#error-text.review-note
+                    a(href="/").btn.btn-outline Return Main Menu
+
+                div#review-content(hidden)
+                    div.panel-card
+                        h1.report-title Game Review
+                        p#review-meta.review-meta
+                        div.coach
+                            div.coach-avatar ♞
+                            div#coach-bubble.coach-bubble
+                                span#coach-text
+                                span#coach-sub.coach-sub
+                        div(style="height:14px")
+                        svg#eval-graph.eval-graph(role="img", aria-label="Evaluation graph. Click to jump to a move.")
+
+                    div.panel-card
+                        div#report
+
+                    div.panel-card
+                        h1.report-title Moves
+                        div#move-list.move-list
+
+                    div.review-actions
+                        a#download-json.btn.btn-outline(download) Download JSON
+                        button#theme-toggle.btn Change Theme
+                    a(href="/").btn.btn-outline Return Main Menu
+
+        script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+        script(src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js")
+        script(src="/public/wsClient.js")
+        script.
+            window.gameId = !{JSON.stringify(gameId)}
+        script(src="/public/clientReview.js")
+        include buttonThemeChange.pug

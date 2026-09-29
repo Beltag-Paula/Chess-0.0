@@ -14,6 +14,7 @@ html
                     div.banner-card
                         p#banner-title.banner-title
                         p#banner-subtitle.banner-subtitle
+                        a#banner-review.btn.btn-review(hidden, target="_blank", rel="noopener") Review Game
 
             div.sidebar
                 div.panel-card
@@ -26,7 +27,7 @@ html
                     div.control-group
                         label(for="difficulty-select") Bot Difficulty
                         select#difficulty-select
-                            option(value="800") 800 Elo (Beginner)
+                            option(value="1320") 1320 Elo (Beginner)
                             option(value="1400" selected) 1400 Elo (Intermediate)
                             option(value="2000") 2000 Elo (Advanced)
                             option(value="2500") 2500 Elo (Grandmaster)
@@ -35,20 +36,23 @@ html
 
                     div.status-container
                         p#game-status Game in progress...
+                        p#engine-info.engine-info
 
                     hr
 
                     div.actions
                         button#resign-btn.btn Give Up
                         button#new-game-btn.btn.btn-outline(disabled) New Game
+                        a#review-btn.btn.btn-review(hidden, target="_blank", rel="noopener") Review Game
                         button#theme-toggle.btn Change Theme
                         a(href="/").btn.btn-outline Return Main Menu
 
         script(src="https://code.jquery.com/jquery-3.6.0.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js")
         script(src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js")
-        script(src="/socket.io/socket.io.js")
+        script(src="/public/wsClient.js")
+        script(src="/public/identity.js")
         script.
-            window.playerColor = "!{color}"
+            window.playerColor = !{JSON.stringify(color)}
         script(src="/public/clientBot.js")
         include buttonThemeChange.pug

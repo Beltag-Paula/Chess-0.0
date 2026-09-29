@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-const socket = io();
+const socket = new GameSocket();
 const game = new Chess();
 const playerColor = window.playerColor;
 
 let gameOver = false;
-
-socket.emit("chooseColor", playerColor);
 
 // --------------------
 // BOARD (SAFE INIT)
@@ -53,7 +51,11 @@ const board = Chessboard("board", {
         const move = game.move({ from: source, to: target, promotion: "q" });
         if (!move) return "snapback";
 
-        socket.emit("playerMove", move);
+        // If we're offline the server never sees this move, so take it back locally too.
+        if (!socket.send("playerMove", { from: move.from, to: move.to, promotion: move.promotion })) {
+            game.undo();
+            return "snapback";
+        }
     }
 });
 
@@ -72,14 +74,29 @@ const banner = document.getElementById("game-over-banner");
 const bannerTitle = document.getElementById("banner-title");
 const bannerSubtitle = document.getElementById("banner-subtitle");
 
+// Review links (banner + sidebar) appear once the server has saved the finished game
+const reviewLinks = [document.getElementById("banner-review"), document.getElementById("review-btn")];
+
+function setReviewLinks(gameId) {
+    reviewLinks.forEach((link) => {
+        if (!link) return;
+        if (gameId) {
+            link.href = `/review/${gameId}`;
+            link.hidden = false;
+        } else {
+            link.hidden = true;
+        }
+    });
+}
+
 if (resignBtn) {
-    resignBtn.onclick = () => socket.emit("playerResign");
+    resignBtn.onclick = () => socket.send("playerResign");
 }
 
 if (newGameBtn) {
     newGameBtn.onclick = () => {
         hideBanner();
-        socket.emit("restartPlayerGame");
+        socket.send("restartPlayerGame");
     };
 }
 
@@ -131,6 +148,7 @@ socket.on("playerBoardState", (fen) => {
 socket.on("playerGameOver", (data) => {
     gameOver = true;
     showBanner(data.winner, data.reason);
+    setReviewLinks(data.gameId);
 
     if (newGameBtn) newGameBtn.disabled = false;
 });
@@ -140,6 +158,7 @@ socket.on("playerGameReset", () => {
     game.reset();
     board.position("start", false); // false = no animation, snaps exactly to start
     hideBanner();
+    setReviewLinks(null);
 
     if (status) status.textContent = "Game in progress...";
     if (newGameBtn) newGameBtn.disabled = true;
@@ -147,6 +166,21 @@ socket.on("playerGameReset", () => {
 
 socket.on("colorTaken", (color) => {
     if (status) status.textContent = `${color} is already taken by another player.`;
+});
+
+// --------------------
+// CONNECTION LIFECYCLE
+// --------------------
+// Runs on the first connect AND after every automatic reconnect: the server released our
+// seat when the old connection dropped, so we sit down again (and get the current board).
+socket.onOpen(({ reconnect }) => {
+    const identity = ChessIdentity.get();
+    socket.send("chooseColor", { color: playerColor, name: identity.name, playerId: identity.playerId });
+    if (reconnect && status && !gameOver) status.textContent = "Game in progress...";
+});
+
+socket.onClose(() => {
+    if (status && !gameOver) status.textContent = "Connection lost. Reconnecting...";
 });
 
 });

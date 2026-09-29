@@ -11,6 +11,11 @@ html(lang="en")
                 h1 ♞ Chess Arena ♞
                 button#theme-toggle.btn.btn-small Change Theme
 
+            div.menu-name
+                label(for="player-name") Your name
+                input#player-name(type="text", maxlength="20", placeholder="Player", autocomplete="nickname")
+                p.hint Shown in game reviews. Optional.
+
             main.menu-grid
                 section.menu-card
                     h2 Vs Stockfish
@@ -26,4 +31,11 @@ html(lang="en")
                         a(href="/gamePlayer/white").btn Play White
                         a(href="/gamePlayer/black").btn.btn-dark Play Black
 
+        script(src="/public/identity.js")
+        script.
+            document.addEventListener("DOMContentLoaded", () => {
+                const input = document.getElementById("player-name");
+                input.value = ChessIdentity.get().name;
+                input.addEventListener("input", () => ChessIdentity.setName(input.value));
+            });
         include buttonThemeChange.pug
